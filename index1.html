@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="user-cover">
+        <div class="container position-relative h-100">
+            <label for="coverImg" class="change-cover-btn">
+                <span>Change cover</span>
+                <input type="file" name="coverImg" id="coverImg">
+            </label>
+        </div>
+    </div>
+    <!-- /.user-cover -->
+    <div class="user-navbar">
+       <div class="container d-flex justify-content-center">
+           <div class="user-ava"></div>
+           <!-- /.user-ava -->
+       </div>
+       <!-- /.container --> 
+       <div class="container mt-3">
+           <h4 class="user-name text-center"></h4>
+       </div>
+       <!-- /.container -->
+    </div>
+    <!-- /.user-navbar -->
+    <div class="images-wrap mt-4">
+        <div class="container mt-4">
+            <label for="userPhotos" class="upload-photos text-center">
+                <span>+ Upload photos</span>
+                <input type="file" name="userPhotos" id="userPhotos" multiple>
+            </label> 
+            <div class="row"></div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container -->
+    </div>
+    <!-- /.images-wrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script src="js/config/env.js"></script>
+    <script src="js/modules/message.js"></script>
+    <script src="js/services/user.js"></script>
+    <script src="js/ui/user.js"></script>
+    <script src="js/ui/image.js"></script>
+    <script src="js/controls/home.js"></script>
+</body>
+</html>

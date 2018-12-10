@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Social network</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="auth-wrap d-flex">
+        <div class="auth-form col col-6 mx-auto my-auto">
+            <h3>Login to Social.</h3>
+            <p class="text-secondary">Enter your e-mail address & password to login to your Social account.</p>
+            <form name="loginForm" novalidate>
+                <div class="form-group">
+                    <input type="email" class="form-control form-control-sm" id="email" placeholder="name@example.com" required data-pattern="^\S+@[a-z]+\.[a-z]+$">
+                    <input type="password" class="form-control form-control-sm mt-3" id="password" placeholder="password" required data-pattern="\S+">
+                    <div class="d-flex mt-5">
+                        <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                        <button type="button" data-toggle="modal" data-target=".reset-password-modal" class="btn btn-link btn-sm ml-auto">Forgotten your password?</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- /.auth-form -->
+        <div class="auth-bg col col-6">
+
+        </div>
+        <!-- /.auth-bg -->
+    </div>
+    <!-- /.auth-wrap -->
+
+    <!-- Modal reset password -->
+    <div class="modal fade reset-password-modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reset password</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="email" class="form-control form-control-sm" id="email" placeholder="name@example.com">
+                    <button type="submit" class="btn btn-primary btn-sm mt-3">Reset</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+    <script src="js/config/env.js"></script>
+    <script src="js/modules/validation.js"></script>
+    <script src="js/modules/message.js"></script>
+    <script src="js/services/auth.js"></script>
+    <script src="js/controls/login.js"></script>
+</body>
+</html>
