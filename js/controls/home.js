@@ -1,13 +1,18 @@
 // Init User Service
 const user = new UserService();
+//Image Servise
+const imageService = new ImageService();
 // Init User UI
 const userUI = new UserUI();
 // Init Image UI
 const imageUI = new ImageUI();
+// Init Image Modal
+const imageModal = new ImageModal();
 // UI elements
 const inputCover = document.getElementById("coverImg");
 const inputUserPhotos = document.getElementById("userPhotos");
-const imgWrapper = document.querySelector("div.images-wrap")
+const imgWrapper = document.querySelector("div.images-wrap");
+const modal = document.querySelector("div.modal-body");
 
 /**
  * onLoad - обработчик события звгрузки страницы, активирует методы экземпляра объекта UserService
@@ -83,9 +88,9 @@ function onPhotosUpload(e){
 function imageOpertion(e){
     e.stopPropagation;
     
-    if(e.target.classList.contains("fa-trash-alt")){
-        const imgId = e.target.closest("div.img-wrap").dataset.imgId;
-        const imgUrlParametr = e.target.closest("div.img-wrap").querySelector("img").src.slice(80);
+    if(e.target.classList.contains("fa-trash-alt")) {
+        const imgId = e.target.closest("[data-img-id]").dataset.imgId;
+        const imgUrlParametr = e.target.closest("[data-img-id]").querySelector("img").src.slice(80);
         const confirmation = confirm(`Действительно удалить изображение № ${imgId}?`);
         if(confirmation){
             user.deletePhoto(imgId, imgUrlParametr)
@@ -99,8 +104,45 @@ function imageOpertion(e){
                 data.my_images.forEach((img) => imageUI.addImage(img));
             })
         }
+    };
+
+    if (e.target.classList.contains("on-hover")) {
+        const id = e.target.closest("[data-img-id]").dataset.imgId;
+        $('#imageModal').modal('toggle');
+
+        imageService.getInfo(id)
+            .then((data) => imageModal.renderInfo(data))
+            .catch((error) => {
+                console.log(error);
+            });
+    };
+
+}
+
+function modalOperations(e) {
+    e.stopPropagation;
+    e.preventDefault();
+
+    if (e.target.classList.contains("btn-primary")) {
+        const imgID = e.target.closest("div.modal-body").querySelector("[data-id]").dataset.id;
+        const form = e.target.closest("form");
+        
+        user.sendNewComment(imgID, form)
+            // .then(
+            //     imageService.getInfo(imgID)
+            //     .then((data) => imageModal.renderInfo(data))
+            //     .catch((error) => {
+            //     console.log(error);
+            //     })
+            // )
+            //Затык с модаьным окном как эго закрыть вместе с прелодером $('#imageModal').modal('toggle');
+    } else if (e.target.classList.contains("fa-trash-alt")){
+        const comId = e.target.closest("div.comment-item-details").dataset.commentId;
+        const pictureId = e.target.closest("div.modal-body").querySelector("[data-id]").dataset.id;
+        user.deleteComment(comId, pictureId);
     }
 }
+
 
 
 // Events
@@ -119,3 +161,12 @@ inputUserPhotos.addEventListener("change", onPhotosUpload);
  * присвоение события клика по галерее изображений
  */
 imgWrapper.addEventListener("click", imageOpertion);
+
+/**
+ * присвоение клика на модальное окно
+ */
+modal.addEventListener("click", modalOperations);
+
+
+// Remove loader
+$('#imageModal').on('hidden.bs.modal', (e) => imageModal.loaderToggle());

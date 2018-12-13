@@ -2,6 +2,64 @@
     height: 100vh;
     min-height: 600px;
 }
+
+/* Loader */
+#loading{
+	background-color: lightgray;
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	z-index: 1;
+	margin-top: 0px;
+	top: 0px;
+}
+#loading.hidden {
+    z-index: -1;
+    opacity: 0;
+}
+#loading-center{
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+#loading-center-absolute {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	height: 200px;
+	width: 200px;
+	margin-top: -100px;
+	margin-left: -100px;
+}
+#object{
+	width: 80px;
+	height: 80px;
+	background-color: rgb(169, 218, 136);
+	-webkit-animation: animate 1s infinite ease-in-out;
+	animation: animate 1s infinite ease-in-out;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 60px;
+}
+@-webkit-keyframes animate {
+  0% { -webkit-transform: perspective(160px); }
+  50% { -webkit-transform: perspective(160px) rotateY(-180deg); }
+  100% { -webkit-transform: perspective(160px) rotateY(-180deg) rotateX(-180deg); }
+}
+
+@keyframes animate {
+  0% { 
+    transform: perspective(160px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(160px) rotateX(0deg) rotateY(0deg); 
+  } 50% { 
+    transform: perspective(160px) rotateX(-180deg) rotateY(0deg);
+    -webkit-transform: perspective(160px) rotateX(-180deg) rotateY(0deg) ;
+  } 100% { 
+    transform: perspective(160px) rotateX(-180deg) rotateY(-180deg);
+    -webkit-transform: perspective(160px) rotateX(-180deg) rotateY(-180deg);
+  }
+}
+
 .auth-wrap > .auth-bg  {
     height: 100%;
 }
@@ -101,4 +159,48 @@
     position: absolute;
     bottom: 20px;
     cursor: pointer;
+}
+
+/* Modal */
+#imageModal .modal-dialog{
+    max-width: 80%;
+    width: 100%;
+}
+
+.current-image img {
+    width: 100%;
+}
+
+.owner-info .owner-avatar {
+    width: 70px;
+    height: 70px;
+    margin-right: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.current-image-stats div i{
+    font-size: 30px;
+}
+
+.comment-item {
+    padding: 20px;
+    background: rgba(0, 0, 0, .1);
+}
+
+.comment-owner-avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.comment-item-info span{
+    font-size: 12px;
+}
+
+.current-image-comments-wrap {
+    height: 250px;
+    overflow-y: auto;
 }

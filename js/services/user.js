@@ -104,11 +104,68 @@ class UserService {
             })
             .then((data) => data.json())
             .then((data) => {
-                if (!data.error) {console.log(data.message)}
+                if (!data.error) {console.log(data.message)};
                 return data;
             })
             .then((data) => resolve(data))
             .catch((error) => reject(error.message));
         });
+    };
+    /**
+     * sendNewComment - метод отправки нового сообщения
+     * @param {string} imageId - идентификатор изображения
+     * @param {Object} form - форма сообщения
+     */
+    sendNewComment(imageId, form) {
+        return new Promise((resolve, reject) => {
+            const token = localStorage.getItem("social_user_token");
+            fetch(`${env.apiUrl}/public/users/comment/${imageId}`, {
+                method: 'POST',
+                body: JSON.stringify({
+                    comment_text: `${form.elements["comment"].value}`
+                    }),
+                headers: {
+                    "x-access-token": token,
+                    "Content-type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                 if (!json.error) {
+                    console.log(json.message);
+                    form.reset();
+                    };
+                    return json;
+                })
+            .then((data) => resolve(data))
+            .catch((error) => reject(error.message));
+         }
+         
+         );
+        
+    };
+    /**
+     * deleteComment - метод удаления коментария
+     * @param {string} comId - идентификатор коментария
+     * @param {string} pictureId - идентефикатор изображения
+     */
+    deleteComment(comId, pictureId) {
+        return new Promise((resolve, reject) => {
+            const token = localStorage.getItem("social_user_token");
+            fetch(`${env.apiUrl}/public/users/comment/${comId}`, {
+                method: 'DELETE',
+                body: JSON.stringify({
+                    image_id: `${pictureId}`
+                    }),
+                headers: {
+                    "x-access-token": token,
+                    "Content-type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(json => console.log(json.message))
+            .catch((error) => reject(error.message))
+        })
     }
+
 }
