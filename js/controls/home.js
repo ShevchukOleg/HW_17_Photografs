@@ -56,7 +56,7 @@ function onCoverUpload(e) {
  * @param {Event} e 
  */
 function onPhotosUpload(e){
-    e.stopPropagation;
+    e.stopPropagation();
     
     if(inputUserPhotos.files.length){
         const userPhoto =  inputUserPhotos.files;
@@ -77,7 +77,8 @@ function onPhotosUpload(e){
                     imageUI.clearContainer();
                     data.my_images.forEach((img) => imageUI.addImage(img));
                 })
-                //Нужно обнулить состояние инпута, не знаю как
+                //Нужно обнулить состояние инпута, если задать .value = "" в цикле то будут потеряны изображения
+                // думал через setTimeOut но не красиво, как коректно?
         })
     }
 }
@@ -86,7 +87,7 @@ function onPhotosUpload(e){
  * @param {Event} e  - клик по полю в котором размещены изображения пользователя
  */
 function imageOpertion(e){
-    e.stopPropagation;
+    e.stopPropagation();
     
     if(e.target.classList.contains("fa-trash-alt")) {
         const imgId = e.target.closest("[data-img-id]").dataset.imgId;
@@ -118,16 +119,18 @@ function imageOpertion(e){
     };
 
 }
-
+/**
+ * modalOperations - обработчик операций в модальном окне
+ * @param {Event} e - событие
+ */
 function modalOperations(e) {
-    e.stopPropagation;
+    e.stopPropagation();
     e.preventDefault();
+    const imgID = e.target.closest("div.modal-body").querySelector("[data-id]").dataset.id;
+    const newCommentForm = e.target.closest("form");
 
-    if (e.target.classList.contains("btn-primary")) {
-        const imgID = e.target.closest("div.modal-body").querySelector("[data-id]").dataset.id;
-        const form = e.target.closest("form");
-        
-        user.sendNewComment(imgID, form)
+    if (e.target.classList.contains("sendMessage")) {
+        user.sendNewComment(imgID, newCommentForm)
             // .then(
             //     imageService.getInfo(imgID)
             //     .then((data) => imageModal.renderInfo(data))
@@ -138,8 +141,25 @@ function modalOperations(e) {
             //Затык с модаьным окном как эго закрыть вместе с прелодером $('#imageModal').modal('toggle');
     } else if (e.target.classList.contains("fa-trash-alt")){
         const comId = e.target.closest("div.comment-item-details").dataset.commentId;
-        const pictureId = e.target.closest("div.modal-body").querySelector("[data-id]").dataset.id;
-        user.deleteComment(comId, pictureId);
+        user.deleteComment(comId, imgID);
+    } 
+    else if(e.target.classList.contains("fa-edit")) {
+        const comIdent = e.target.closest("div.comment-item-details").dataset.commentId;
+        let newMessageForm = e.target.closest("div.comment-item").querySelector("form.newMessage");
+        newMessageForm.classList.toggle("d-none");
+        // newMessageForm.addEventListener('submit', (e) => {
+        //     e.preventDefault();
+        //     user.editComment(comIdent, newMessageForm);
+        // }); - ну на***,
+        // -Отец!!
+        // -  ну ты видел, видел?
+        // -Отец подумайне о ней!
+        // -Во бл***!
+        newMessageForm.querySelector("button.editMessage").addEventListener("click", (e) => {
+            e.preventDefault();
+            user.editComment(comIdent, newMessageForm)
+            
+        });
     }
 }
 

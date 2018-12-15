@@ -119,6 +119,7 @@ class UserService {
     sendNewComment(imageId, form) {
         return new Promise((resolve, reject) => {
             const token = localStorage.getItem("social_user_token");
+            const imgID = form.closest("div.modal-body").querySelector("[data-id]").dataset.id;
             fetch(`${env.apiUrl}/public/users/comment/${imageId}`, {
                 method: 'POST',
                 body: JSON.stringify({
@@ -135,6 +136,16 @@ class UserService {
                     console.log(json.message);
                     form.reset();
                     };
+                    return json;
+                })
+            .then(json => {
+                    imageService.getInfo(imgID)
+                    .then((data) => {
+                        imageModal.clearModal();
+                        imageModal.setBaseInfo(data);
+                        imageModal.setComments(data);
+                    })
+                    .catch((error) => {console.log(error);})
                     return json;
                 })
             .then((data) => resolve(data))
@@ -163,9 +174,66 @@ class UserService {
                 }
             })
             .then(response => response.json())
-            .then(json => console.log(json.message))
+            .then(json => {
+                console.log(json.message);
+                return json;
+            })
+            .then(json => {
+                imageService.getInfo(pictureId)
+                .then((data) => {
+                    imageModal.clearModal();
+                    imageModal.setBaseInfo(data);
+                    imageModal.setComments(data);
+                })
+                .catch((error) => {console.log(error);})
+                return json;
+            })
+            .then((data) => resolve(data))
             .catch((error) => reject(error.message))
         })
-    }
+    };
+    /**
+     * editComment- редактирование коментария
+     * @param {*} comId - идентефикатор кометария
+     * @param {*} form - форма с кометаием под изображением
+     */
+    editComment(comId, form){
+        return new Promise((resolve, reject) => {
+            const token = localStorage.getItem("social_user_token");
+            const imgID = form.closest("div.modal-body").querySelector("[data-id]").dataset.id;
+            fetch(`${env.apiUrl}/public/users/comment/${comId}`, {
+                method: 'PUT',
+                body: JSON.stringify({
+                    comment_text: `${form.elements["UserMessage"].value}`
+                    }),
+                headers: {
+                    "x-access-token": token,
+                    "Content-type": "application/json"
+                }
+            })
+            .then(response => response.json())
+            .then(json => {
+                if (!json.error) {
+                    console.log(json.message);
+                    form.reset();
+                    form.classList.toggle("d-none");
+                    };
+                    return json;
+                })
+            .then(json => {
+                    imageService.getInfo(imgID)
+                    .then((data) => {
+                        imageModal.clearModal();
+                        imageModal.setBaseInfo(data);
+                        imageModal.setComments(data);
+                    })
+                    .catch((error) => {console.log(error);})
+                    return json;
+                })
+            .then((data) => resolve(data))
+            .catch((error) => reject(error.message));
+        })  
+
+    };
 
 }

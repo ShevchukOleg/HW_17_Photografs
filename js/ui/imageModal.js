@@ -23,7 +23,10 @@ class ImageModal {
     loaderToggle() {
         this._loader.classList.toggle("hidden");
     }
-
+    /**
+     * setBaseInfo - заполнение дынных верхнего информационного окна картинки в модальном разделе
+     * @param {Object} image - изображение
+     */
     setBaseInfo(image) {
         const template = ImageModal._basicInfoTemplate(image);
 
@@ -45,9 +48,12 @@ class ImageModal {
         });
         this._commentContainer.insertAdjacentHTML("afterbegin", template);
     }
-
+    /**
+     * clearModal - очистка информации о изображении модального раздела
+     */
     clearModal() {
         this._imageInfoContainer.innerHTML = "";
+        this._commentContainer.innerHTML = "";
     }
 
 
@@ -61,7 +67,7 @@ class ImageModal {
         const currentUserId = localStorage.getItem("social_user_id");
         const isOwner = currentUserId == owner || currentUserId == _id;
         return `
-        <div class="comment-item mb-4">
+        <div class="comment-item mb-2">
             <div class="comment-item-details d-flex" data-comment-id= "${id}">
                 <div class="comment-owner-avatar">
                     <img src="${avatar}" alt="">
@@ -80,6 +86,17 @@ class ImageModal {
             <!-- /.comment-item-details -->
             <div class="sub-comments"></div>
             <!-- /.sub-comments -->
+            <form class="newMessage d-none">
+                <div class="input-group mt-2 mb-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Enter new message</span>
+                    </div>
+                    <input type="text" class="form-control" name="UserMessage" placeholder="Your new message" aria-label="new_message" aria-describedby="basic-addon1">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary editMessage">Send</button>
+                    </div>
+                </div>
+            </form>
         </div>
         <!-- /.comment-item -->
         `;

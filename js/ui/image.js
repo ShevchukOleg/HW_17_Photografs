@@ -16,9 +16,8 @@ class ImageUI {
         this._imagesContainer.insertAdjacentHTML("afterbegin", template);
     }
 
-    removeImage(id) {
-        // home task
-    }
+    // removeImage(id) {
+    // }
 
     /**
      * очистка разметки
